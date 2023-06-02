@@ -5,6 +5,16 @@ import model.Goods;
 
 public class SubmitManager {
 
+    public void fromInventoryToCArt(InventoryManager inventory, CartManager cart, Goods good, int count) {
+        for (Goods goods : inventory.addedGoods) {
+            if (goods.equals(good)) {
+                cart.addGoods(goods);
+                goods.setContInProgress(count);
+                good.setCountInventory(good.getCountInventory()- count);
+            }
+        }
+    }
+
     public void submit(CartManager cart) {
         for (Goods goods : cart.getAll()) {
             if (goods instanceof Expirable) {
@@ -13,9 +23,11 @@ public class SubmitManager {
         }
         System.out.println("Your Order submitted :");
         for (Goods goods : cart.getAll()) {
-            System.out.println(goods);
+            System.out.println(goods.toStringForCart());
         }
+        System.out.println();
         cart.clear();
     }
+
 
 }

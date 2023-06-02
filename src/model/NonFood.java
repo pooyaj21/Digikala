@@ -5,12 +5,25 @@ public class NonFood extends Goods {
         super("NF", count);
     }
 
+    public String toStringForInventory() {
+        return " NonFood" +
+                " id: " + id + '/' +
+                " count: " + countInventory
+                ;
+    }
+
+    public String toStringForCart() {
+        return " NonFood" +
+                " id: " + id + '/' +
+                " count: " + contInProgress
+                ;
+    }
 
     @Override
     public String toString() {
-        return " Non Food" +
+        return " NonFood" +
                 " id: " + id + '/' +
-                " count: " + count
+                ", count: " + countInventory
                 ;
     }
 }

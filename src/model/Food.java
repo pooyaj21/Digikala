@@ -18,12 +18,25 @@ public abstract class Food extends Goods implements Expirable {
     }
 
 
+    public String toStringForInventory() {
+        return " Food" +
+                " id: " + id + '/' +
+                " count: " + countInventory
+                ;
+    }
+
+    public String toStringForCart() {
+        return " Food" +
+                " id: " + id + '/' +
+                " count: " + contInProgress
+                ;
+    }
 
     @Override
     public String toString() {
         return " Food" +
                 " id: " + id + '/' +
-                ", count: " + count
+                ", count: " +countInventory
                 ;
     }
 

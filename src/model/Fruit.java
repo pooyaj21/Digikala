@@ -6,11 +6,25 @@ public class Fruit extends Food {
         super("FR", count, 45);
     }
 
+    public String toStringForInventory() {
+        return " Fruit" +
+                " id: " + id + '/' +
+                " count: " + countInventory
+                ;
+    }
+
+    public String toStringForCart() {
+        return " Fruit" +
+                " id: " + id + '/' +
+                " count: " + contInProgress
+                ;
+    }
+
     @Override
     public String toString() {
         return " Fruit" +
                 " id: " + id + '/' +
-                " count: " + count
+                ", count: " + countInventory
                 ;
     }
 }
