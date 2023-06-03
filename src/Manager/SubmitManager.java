@@ -22,8 +22,10 @@ public class SubmitManager {
             }
         }
         System.out.println("Your Order submitted :");
+        int counter=1;
         for (Goods goods : cart.getAll()) {
-            System.out.println(goods.toStringForCart());
+            System.out.println(counter+"."+goods.toStringForCart());
+            counter++;
         }
         System.out.println();
         cart.clear();

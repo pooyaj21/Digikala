@@ -4,6 +4,7 @@ import Manager.SubmitManager;
 import model.Drink;
 import model.Fruit;
 import model.NonFood;
+import util.FileManagement;
 
 
 public class Main {
@@ -23,12 +24,22 @@ public class Main {
         System.out.println(inventory);
 
         CartManager cart = new CartManager();
-        System.out.println(cart);
-        submitManager.fromInventoryToCArt(inventory, cart, d1, 1);
 
+
+        submitManager.fromInventoryToCArt(inventory, cart,
+                inventory.search("fdr2"), 1);
+        submitManager.fromInventoryToCArt(inventory, cart,
+                inventory.search("ffr1"), 1);
+
+
+        FileManagement.writeCart(cart.getAll());
 
         submitManager.submit(cart);
+
         System.out.println(inventory);
+        FileManagement.writeInventory(inventory.getAll());
+
+
 
     }
 }
