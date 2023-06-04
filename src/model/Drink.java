@@ -6,6 +6,10 @@ public class Drink extends Food {
         super("DR", count, 60);
     }
 
+    public Drink(int count, int addedTimeInSeconds) {
+        super("DR", count, 60, addedTimeInSeconds);
+    }
+
     public String toStringForInventory() {
         return " Drink" +
                 " id: " + id + '/' +

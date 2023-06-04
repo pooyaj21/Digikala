@@ -199,7 +199,7 @@ public class Menu {
 
     private static void submitTheCart() {
         System.out.print("\n"+cart);
-        submitManager.submit(cart);
+        submitManager.submit(cart,inventory);
     }
 
     

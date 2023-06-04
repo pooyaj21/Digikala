@@ -1,12 +1,11 @@
 package util;
 
 import Manager.InventoryManager;
-import model.Expirable;
-import model.Food;
-import model.Fruit;
-import model.Goods;
+import model.*;
+
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class FileManagement {
     static int cartCounter=1;
@@ -38,15 +37,27 @@ public class FileManagement {
         }catch (IOException e) {e.printStackTrace();}
     }
 
-    public void readFromFile(InventoryManager inventory){
+    public static void readFromFile(InventoryManager inventory){
+        ArrayList<String> a = new ArrayList<>();
         try {BufferedReader reader = new BufferedReader(new FileReader("InventorySource.txt"));
             String readLine;
             while ((readLine = reader.readLine()) != null){
                 Goods good;
-                //if (readLine.contains("FFR")good=new Fruit(reader.)//most read next line for count
-                // and next line for add time
+                a.add(readLine);
             }
         }catch (IOException e) {e.printStackTrace();}
+        for (int i = 0; i <a.size(); i++) {
+            if(a.get(i).contains("FR")){
+                inventory.addGoods(
+                        new Fruit(Integer.parseInt(a.get(i+1)),Integer.parseInt(a.get(i+2))));
+            } else if (a.get(i).contains("DR")) {
+                inventory.addGoods(
+                        new Drink(Integer.parseInt(a.get(i+1)),Integer.parseInt(a.get(i+2))));
+            }else if(a.get(i).contains("NF")){
+                inventory.addGoods(new NonFood(Integer.parseInt(a.get(i+1))));
+            }
+        }
+
     }
 
     public static void writeCart(ArrayList<Goods> cart){
@@ -60,5 +71,6 @@ public class FileManagement {
         }catch (IOException e) {e.printStackTrace();}
         cartCounter++;
     }
+
 
 }

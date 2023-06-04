@@ -37,7 +37,7 @@ public class SubmitManager {
         }
     }
 
-    public void submit(CartManager cart) {
+    public void submit(CartManager cart, InventoryManager inventory) {
         for (Goods goods : cart.getAll()) {
             if (goods instanceof Expirable) {
                 if (((Expirable) goods).isExpired()){
@@ -49,6 +49,7 @@ public class SubmitManager {
         }
         System.out.println("Your Order submitted :");
         FileManagement.writeCart(cart.getAll());
+        FileManagement.writeInventoryForSave(inventory.getAll());
         int counter=1;
         for (Goods goods : cart.getAll()) {
             System.out.println(counter+"."+goods.toStringForCart());

@@ -6,6 +6,10 @@ public class Fruit extends Food {
         super("FR", count, 45);
     }
 
+    public Fruit( int count, int addedTimeInSeconds) {
+        super("FR", count, 45, addedTimeInSeconds);
+    }
+
     public String toStringForInventory() {
         return " Fruit" +
                 " id: " + id + '/' +
