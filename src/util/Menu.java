@@ -138,6 +138,7 @@ public class Menu {
                 switch (option) {
                     case 1:
                         FileManagement.writeInventory(inventory.getAll());
+                        FileManagement.writeInventoryForSave(inventory.getAll());
                         System.out.print("File Created");
                         break;
                     case 2:

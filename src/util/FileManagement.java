@@ -1,5 +1,9 @@
 package util;
 
+import Manager.InventoryManager;
+import model.Expirable;
+import model.Food;
+import model.Fruit;
 import model.Goods;
 import java.io.*;
 import java.util.ArrayList;
@@ -14,6 +18,34 @@ public class FileManagement {
                 writer.newLine();
             }
             writer.close();
+        }catch (IOException e) {e.printStackTrace();}
+    }
+
+    public static void writeInventoryForSave(ArrayList<Goods> inventoryList){
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("InventorySource.txt"));
+            for (Goods good:inventoryList) {
+                writer.write(good.getId());
+                writer.newLine();
+                writer.write(good.getCountInventoryToString());
+                writer.newLine();
+                if(good instanceof Expirable){
+                    writer.write(((Food) good).getAddedTimeInSecondsToString());
+                    writer.newLine();
+                }
+            }
+            writer.close();
+        }catch (IOException e) {e.printStackTrace();}
+    }
+
+    public void readFromFile(InventoryManager inventory){
+        try {BufferedReader reader = new BufferedReader(new FileReader("InventorySource.txt"));
+            String readLine;
+            while ((readLine = reader.readLine()) != null){
+                Goods good;
+                //if (readLine.contains("FFR")good=new Fruit(reader.)//most read next line for count
+                // and next line for add time
+            }
         }catch (IOException e) {e.printStackTrace();}
     }
 

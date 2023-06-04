@@ -4,6 +4,7 @@ import Manager.SubmitManager;
 import model.Drink;
 import model.Fruit;
 import model.NonFood;
+import util.FileManagement;
 import util.Menu;
 
 public class Main {
@@ -17,10 +18,11 @@ public class Main {
         inventory.addGoods(new Drink(10));
         inventory.addGoods(new NonFood(10));
         inventory.addGoods(new NonFood(10));
+        FileManagement.writeInventoryForSave(inventory.getAll());
 
-        CartManager cart = new CartManager();
-        Menu menu =new Menu(inventory,submitManager,cart);
-
-        menu.mainMenu();
+//        CartManager cart = new CartManager();
+//        Menu menu =new Menu(inventory,submitManager,cart);
+//
+//        menu.mainMenu();
     }
 }

@@ -13,6 +13,20 @@ public abstract class Food extends Goods implements Expirable {
         this.expireDurationInSeconds = expireDuration;
     }
 
+    public Food(String prefixID, int count, int expireDuration,int addedTimeInSeconds) {
+        super("F" + prefixID, count);
+        this.addedTimeInSeconds = addedTimeInSeconds;
+        this.expireDurationInSeconds = expireDuration;
+    }
+    public long getAddedTimeInSeconds() {
+        return addedTimeInSeconds;
+    }
+
+    public String getAddedTimeInSecondsToString() {
+        return ""+addedTimeInSeconds;
+    }
+
+
     public boolean isExpired() {
         return (TimeUtility.currentTimeInSeconds() - addedTimeInSeconds) >= expireDurationInSeconds;
     }

@@ -20,6 +20,10 @@ public abstract class Goods{
         return countInventory;
     }
 
+    public String getCountInventoryToString() {
+        return ""+countInventory;
+    }
+
     public void setCountInventory(int countInventory) {
         this.countInventory = countInventory;
     }
@@ -32,9 +36,6 @@ public abstract class Goods{
         this.contInProgress = contInProgress;
     }
 
-    public String getPrefixID() {
-        return prefixID;
-    }
 
     public String getId() {
         return id;
