@@ -14,22 +14,24 @@ public final class InventoryManager extends Managing{
         return inventory;
     }
 
-    public Goods search(String userInput){
+
+
+    public Boolean checkGoodsLeftInInventory(Goods selectedGood , int count){
         for (Goods good:inventory.getAll()) {
-            if(good.getId().equals(userInput.toUpperCase()))return good;
+            if(good.equals(selectedGood)) return good.getCountInventory()>=count;
         }
-        return null;
+        return false;
     }
-
-
 
     @Override
     public String toString() {
         int counter=1;
         String inventory = "";
         for (Goods goods : super.addedGoods) {
-            inventory += counter + "."+ goods.toStringForInventory()+"\n";
-            counter++;
+            if(goods.getCountInventory()!=0) {
+                inventory += counter + "." + goods.toStringForInventory() + "\n";
+                counter++;
+            }
         }
         return inventory;
     }

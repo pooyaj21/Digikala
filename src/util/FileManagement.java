@@ -1,10 +1,7 @@
 package util;
 
-
 import model.Goods;
-
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class FileManagement {
@@ -13,7 +10,7 @@ public class FileManagement {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("Inventory.txt"));
             for (int i = 0; i < inventoryList.size(); i++) {
-                writer.write((i+1)+inventoryList.get(i).toStringForInventory());
+                writer.write((i+1)+". "+inventoryList.get(i).toStringForInventory());
                 writer.newLine();
             }
             writer.close();
@@ -24,7 +21,7 @@ public class FileManagement {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("Cart"+cartCounter+".txt"));
             for (int i = 0; i < cart.size(); i++) {
-                writer.write((i+1)+cart.get(i).toStringForCart());
+                writer.write((i+1)+". "+cart.get(i).toStringForCart());
                 writer.newLine();
             }
             writer.close();
