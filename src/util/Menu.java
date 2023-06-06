@@ -3,7 +3,10 @@ package util;
 import Manager.CartManager;
 import Manager.InventoryManager;
 import Manager.SubmitManager;
+import model.Drink;
+import model.Fruit;
 import model.Goods;
+import model.NonFood;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -59,9 +62,10 @@ public class Menu {
     }
 
     private static void inventoryMenu() {
-        System.out.print("\n"+inventory);
-        String[] MainOptions = {"\n1- Buy",
-                "2- Return to Main menu",
+        System.out.print("\n" + inventory);
+        String[] MainOptions = {"\n1- Add Item in Inventory",
+                "2- Buy",
+                "3- Return to Main menu",
         };
         Scanner scanner = new Scanner(System.in);
         int option = 0;
@@ -71,9 +75,12 @@ public class Menu {
                 option = scanner.nextInt();
                 switch (option) {
                     case 1:
-                        buyItems();
+                        addToInventory();
                         break;
                     case 2:
+                        buyItems();
+                        break;
+                    case 3:
                         mainMenu();
                         break;
                     default:
@@ -88,7 +95,7 @@ public class Menu {
     }
 
     private static void cartMenu() {
-        System.out.print("\n"+cart);
+        System.out.print("\n" + cart);
         String[] MainOptions = {"\n1- Buy",
                 "2- Remove from the Cart",
                 "3- Submit The Cart",
@@ -124,7 +131,7 @@ public class Menu {
         }
     }
 
-    public static void ExchangeToFile(){
+    public static void ExchangeToFile() {
         String[] MainOptions = {"\n1- Make a Inventory List",
                 "2- Make a Cart List",
                 "3- Return to Main menu",
@@ -159,6 +166,24 @@ public class Menu {
         }
     }
 
+    private static void addToInventory() {
+        System.out.println("Enter your new Goods category(Fruit,Drink,Non Food)");
+        String userInput = new Scanner(System.in).nextLine();
+        Goods good;
+        System.out.println("How much Goods?");
+        int userInputCount = new Scanner(System.in).nextInt();
+        if (userInput.equalsIgnoreCase("Fruit")) {
+            inventory.addGoods(new Fruit(userInputCount));
+        }
+        if (userInput.equalsIgnoreCase("Drink")) {
+            inventory.addGoods(new Drink(userInputCount));
+        }
+        if (userInput.equalsIgnoreCase("Non Food")) {
+            inventory.addGoods(new NonFood(userInputCount));
+        }
+
+    }
+
     private static void buyItems() {
         System.out.print("Enter your Goods ID that you want to Add: ");
         String userInputID = new Scanner(System.in).nextLine();
@@ -175,10 +200,10 @@ public class Menu {
             inventoryMenu();
         }
         submitManager.fromInventoryToCArt(inventory, cart, selectedGood, userInputCount);
-        System.out.print("\n"+inventory);
+        System.out.print("\n" + inventory);
     }
 
-    private static void removeItems(){
+    private static void removeItems() {
         System.out.print("Enter your Goods ID that you want to Remove: ");
         String userInputID = new Scanner(System.in).nextLine();
         if (cart.search(userInputID) == null) {
@@ -194,14 +219,13 @@ public class Menu {
             cartMenu();
         }
         submitManager.fromCartToInventory(inventory, cart, selectedGood, userInputCount);
-        System.out.print("\n"+cart);
+        System.out.print("\n" + cart);
     }
 
     private static void submitTheCart() {
-        System.out.print("\n"+cart);
-        submitManager.submit(cart,inventory);
+        System.out.print("\n" + cart);
+        submitManager.submit(cart, inventory);
     }
 
-    
 
 }
