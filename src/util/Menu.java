@@ -52,10 +52,10 @@ public class Menu {
                         ExchangeToFile();
                         break;
                     default:
-                        System.out.println("Wrong entry!");
+                        System.err.println("Wrong entry!");
                 }
             } catch (InputMismatchException ex) {
-                System.out.println("Please enter an integer value between 1 and " + MainOptions.length);
+                System.err.println("Please enter an integer value between 1 and " + MainOptions.length);
                 scanner.next();
             }
         }
@@ -64,8 +64,9 @@ public class Menu {
     private static void inventoryMenu() {
         System.out.print("\n" + inventory);
         String[] MainOptions = {"\n1- Add Item in Inventory",
-                "2- Buy",
-                "3- Return to Main menu",
+                "2- Remove Item in Inventory",
+                "3- Buy",
+                "4- Return to Main menu",
         };
         Scanner scanner = new Scanner(System.in);
         int option = 0;
@@ -78,17 +79,19 @@ public class Menu {
                         addToInventory();
                         break;
                     case 2:
+                        removeItemFromInventory();
+                    case 3:
                         buyItems();
                         break;
-                    case 3:
+                    case 4:
                         mainMenu();
                         break;
                     default:
-                        System.out.println("Wrong entry!");
-                        System.out.println("Please enter an integer value between 1 and " + MainOptions.length);
+                        System.err.println("Wrong entry!");
+                        System.err.println("Please enter an integer value between 1 and " + MainOptions.length);
                 }
             } catch (InputMismatchException ex) {
-                System.out.println("Please enter an integer value between 1 and " + MainOptions.length);
+                System.err.println("Please enter an integer value between 1 and " + MainOptions.length);
                 scanner.next();
             }
         }
@@ -112,7 +115,7 @@ public class Menu {
                         buyItems();
                         break;
                     case 2:
-                        removeItems();
+                        removeItemsFromCart();
                         break;
                     case 3:
                         submitTheCart();
@@ -121,11 +124,11 @@ public class Menu {
                         mainMenu();
                         break;
                     default:
-                        System.out.println("Wrong entry!");
-                        System.out.println("Please enter an integer value between 1 and " + MainOptions.length);
+                        System.err.println("Wrong entry!");
+                        System.err.println("Please enter an integer value between 1 and " + MainOptions.length);
                 }
             } catch (InputMismatchException ex) {
-                System.out.println("Please enter an integer value between 1 and " + MainOptions.length);
+                System.err.println("Please enter an integer value between 1 and " + MainOptions.length);
                 scanner.next();
             }
         }
@@ -156,11 +159,11 @@ public class Menu {
                         mainMenu();
                         break;
                     default:
-                        System.out.println("Wrong entry!");
-                        System.out.println("Please enter an integer value between 1 and " + MainOptions.length);
+                        System.err.println("Wrong entry!");
+                        System.err.println("Please enter an integer value between 1 and " + MainOptions.length);
                 }
             } catch (InputMismatchException ex) {
-                System.out.println("Please enter an integer value between 1 and " + MainOptions.length);
+                System.err.println("Please enter an integer value between 1 and " + MainOptions.length);
                 scanner.next();
             }
         }
@@ -169,19 +172,23 @@ public class Menu {
     private static void addToInventory() {
         System.out.println("Enter your new Goods category(Fruit,Drink,Non Food)");
         String userInput = new Scanner(System.in).nextLine();
-        Goods good;
-        System.out.println("How much Goods?");
-        int userInputCount = new Scanner(System.in).nextInt();
         if (userInput.equalsIgnoreCase("Fruit")) {
+            System.out.println("How much Goods?");
+            int userInputCount = new Scanner(System.in).nextInt();
             inventory.addGoods(new Fruit(userInputCount));
-        }
-        if (userInput.equalsIgnoreCase("Drink")) {
+        } else if (userInput.equalsIgnoreCase("Drink")) {
+            System.out.println("How much Goods?");
+            int userInputCount = new Scanner(System.in).nextInt();
             inventory.addGoods(new Drink(userInputCount));
-        }
-        if (userInput.equalsIgnoreCase("Non Food")) {
+        }else if (userInput.equalsIgnoreCase("Non Food")) {
+            System.out.println("How much Goods?");
+            int userInputCount = new Scanner(System.in).nextInt();
             inventory.addGoods(new NonFood(userInputCount));
+        }else{
+            System.err.println("Enter the right category!");
         }
-
+        FileManagement.writeInventoryForSave(inventory.getAll());
+        inventoryMenu();
     }
 
     private static void buyItems() {
@@ -189,7 +196,7 @@ public class Menu {
         String userInputID = new Scanner(System.in).nextLine();
         if (inventory.search(userInputID) == null) {
             System.err.println("Didn't found Goods you want!");
-            inventoryMenu();
+            mainMenu();
         }
         Goods selectedGood = inventory.search(userInputID);
         System.out.print("How manny of " + userInputID + " do you want to Add? ");
@@ -197,29 +204,50 @@ public class Menu {
         if (!inventory.checkGoodsLeftInInventory(selectedGood, userInputCount)) {
             System.err.println("sorry we don't have " + userInputID
                     + " in " + userInputCount + " amount\n");
-            inventoryMenu();
+            mainMenu();
         }
         submitManager.fromInventoryToCArt(inventory, cart, selectedGood, userInputCount);
         System.out.print("\n" + inventory);
+        mainMenu();
     }
 
-    private static void removeItems() {
+    private static void removeItemsFromCart() {
         System.out.print("Enter your Goods ID that you want to Remove: ");
         String userInputID = new Scanner(System.in).nextLine();
         if (cart.search(userInputID) == null) {
             System.err.println("Didn't found Goods you want!");
-            cartMenu();
+            mainMenu();
+        }
+        Goods selectedGood = cart.search(userInputID);
+        System.out.print("How manny of " + userInputID + " do you want to Remove? ");
+        int userInputCount = new Scanner(System.in).nextInt();
+        if (cart.checkGoodsLeft(selectedGood, userInputCount)) {
+            System.err.println("sorry you don't have " + userInputID
+                    + " in " + userInputCount + " amount\n");
+            mainMenu();
+        }
+        selectedGood.setCountInventory(selectedGood.getCountInventory()+userInputCount);
+        selectedGood.setContInProgress(selectedGood.getContInProgress()-userInputCount);
+        inventoryMenu();
+    }
+
+    private static void removeItemFromInventory(){
+        System.out.print("Enter your Goods ID that you want to Remove: ");
+        String userInputID = new Scanner(System.in).nextLine();
+        if (inventory.search(userInputID) == null) {
+            System.err.println("Didn't found Goods you want!");
+            inventoryMenu();
         }
         Goods selectedGood = inventory.search(userInputID);
         System.out.print("How manny of " + userInputID + " do you want to Remove? ");
         int userInputCount = new Scanner(System.in).nextInt();
-        if (cart.checkGoodsLeftInCart(selectedGood, userInputCount)) {
+        if (inventory.checkGoodsLeft(selectedGood, userInputCount)) {
             System.err.println("sorry you don't have " + userInputID
                     + " in " + userInputCount + " amount\n");
-            cartMenu();
+            inventoryMenu();
         }
-        submitManager.fromCartToInventory(inventory, cart, selectedGood, userInputCount);
-        System.out.print("\n" + cart);
+        selectedGood.setCountInventory(selectedGood.getCountInventory()-userInputCount);
+        inventoryMenu();
     }
 
     private static void submitTheCart() {

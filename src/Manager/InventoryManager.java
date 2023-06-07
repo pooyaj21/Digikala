@@ -7,14 +7,20 @@ public final class InventoryManager extends Managing{
     private InventoryManager() {
     }
 
+    public Boolean checkGoodsLeft(Goods selectedGood , int count){
+        for (Goods good:addedGoods) {
+            if(good.equals(selectedGood)) return good.getCountInventory()<=count;
+        }
+        if (count<0)return false;
+        return false;
+    }
+
     public static InventoryManager getInstance(){
         if(inventory == null) {
             inventory = new InventoryManager();
         }
         return inventory;
     }
-
-
 
     public Boolean checkGoodsLeftInInventory(Goods selectedGood , int count){
         for (Goods good:inventory.getAll()) {

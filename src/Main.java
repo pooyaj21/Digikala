@@ -30,7 +30,7 @@ public class Main {
         Menu menu = new Menu(inventory, submitManager, cart);
 
         menu.mainMenu();
-        
+
     }
 
     public static Boolean seeFileIsEmpty() {

@@ -39,7 +39,6 @@ abstract class Managing {
     }
 
 
-
     @Override
     public String toString() {
         int counter = 1;

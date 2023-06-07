@@ -5,8 +5,6 @@ import model.*;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Scanner;
-
 public class FileManagement {
     static int cartCounter=1;
     public static void writeInventory(ArrayList<Goods> inventoryList){
@@ -42,7 +40,6 @@ public class FileManagement {
         try {BufferedReader reader = new BufferedReader(new FileReader("InventorySource.txt"));
             String readLine;
             while ((readLine = reader.readLine()) != null){
-                Goods good;
                 a.add(readLine);
             }
         }catch (IOException e) {e.printStackTrace();}
