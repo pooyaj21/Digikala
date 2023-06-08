@@ -7,15 +7,11 @@ import model.NonFood;
 import util.FileManagement;
 import util.Menu;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-
 public class Main {
     public static void main(String[] args) {
         InventoryManager inventory = InventoryManager.getInstance();
         SubmitManager submitManager = new SubmitManager();
-        if (seeFileIsEmpty()) {
+        if (FileManagement.seeFileIsEmpty()) {
             inventory.addGoods(new Fruit(84));
             inventory.addGoods(new Fruit(34));
             inventory.addGoods(new Drink(12));
@@ -31,17 +27,5 @@ public class Main {
 
         menu.mainMenu();
 
-    }
-
-    public static Boolean seeFileIsEmpty() {
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader("InventorySource.txt"));
-            if (reader.readLine() == null) {
-                return true;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return false;
     }
 }

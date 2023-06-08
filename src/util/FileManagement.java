@@ -69,5 +69,16 @@ public class FileManagement {
         cartCounter++;
     }
 
+    public static Boolean seeFileIsEmpty() {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("InventorySource.txt"));
+            if (reader.readLine() == null) {
+                return true;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
 }
